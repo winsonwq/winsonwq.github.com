@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			*{padding:0;margin:0}
+			body{min-height:800px;font-family:consolas;-webkit-user-select:none;background:#555;color:#fff;padding:20px;}
+			h1{margin:0 auto;font-size:70px;position:fixed;-webkit-transform:rotate(-90deg);top:150px;left:0}
+			.number{padding:10px;border-bottom:1px solid #777;width:600px;margin:0 auto;}
+			
+			.number{
+				-webkit-transition-property: background-color, color;
+				-webkit-transition-duration: 1s;
+				-webkit-timing-function : ease-in;
+				-webkit-transition-delay: 0;
+			}
+			.number:hover{
+				background-color : greenyellow;
+				color : #000;
+			}
+		</style>
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+		<script type="text/javascript" src="http://raw.github.com/winsonwq/Mr.Async/master/Mr.Async.js"></script>
+		<script type="text/javascript" src="http://raw.github.com/winsonwq/Mr.Async/master/Recoder/ExpressionVisitor.js"></script>
+		<script type="text/javascript" src="http://raw.github.com/winsonwq/Mr.Async/master/Recoder/parser.js"></script>
+		<script type="text/javascript" src="http://raw.github.com/winsonwq/Mr.Async/master/Recoder/Mr.Recoder.js"></script>
+		<script type="text/javascript" src="http://raw.github.com/winsonwq/Mr.Async/master/Mr.Async.Interpreter.js"></script>
+		<script type="text/javascript">			
+			$(function(){		
+				function once(dom, event){
+					var de = Mr.Deferred();
+					
+					$(dom).one(event, function(){
+						de.resolve();
+					});
+					
+					return de.promise();
+				}
+				
+				function print(number){
+					$('<div></div>').addClass('number').text(number).appendTo(document.body);
+				}
+						
+				var fibonacci = eval(Mr.Async.recode(function(){
+					$await(once(document.body, 'click'));
+					print(0);
+					
+					$await(once(document.body, 'click'));
+					print(1);
+					
+					var a = 0, current = 1;
+					while(true){
+						var b = a;
+						a = current;
+						current = a + b;
+						
+						$await(once(document.body, 'click'));
+						print(current);
+					}
+					
+				})).start();
+			});
+		</script>
+	</head>
+	<body>
+		<h1>FIBONACCI</h1>
+	</body>
+</html>
