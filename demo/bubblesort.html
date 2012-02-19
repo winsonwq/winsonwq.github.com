@@ -3,8 +3,9 @@
 	<head>
 		<style>
 			*{padding:0;margin:0}
-			body{font-family:consolas}
-			#canvas{position:absolute;left:100px;top:300px;}
+			body{font-family:consolas;padding:20px;}
+			h1{width:500px;margin:0 auto;font-size:60px;text-align:center;text-shadow:2px 2px 2px #ccc;}
+			#canvas{position:relative;width:500px;margin:0 auto;height:300px;}
 			li.active{background:brown !important;}
 			li{display:inline-block;bottom:0;left:0;position:absolute;border:1px solid #eee;-webkit-box-shadow:0 0 5px #bbb;-moz-box-shadow:0 0 5px #bbb;
 				-webkit-transition-property:background-color;-webkit-transition-duration:.4s;
@@ -19,13 +20,13 @@
 		<script type="text/javascript" src="https://raw.github.com/winsonwq/Mr.Async/master/Mr.Async.Interpreter.js"></script>
 		<script type="text/javascript">
 			var config = {
-				width : 15,
+				width : 20,
 				valueToPixel : 2,
 				interval : 10,
 				color : 'yellowgreen'
 			};
 			
-			var values = [40, 50, 11, 44, 55, 98, 33, 89, 53, 20, 24, 55, 77, 43, 20];
+			var values = [40, 50, 11, 44, 55, 98, 33, 89, 53, 20, 24, 55, 77, 43, 20, 86, 22];
 			
 			function initialize(array){
 				var objs = []
@@ -102,6 +103,7 @@
 		</script>
 	</head>
 	<body>
+		<h1>BubbleSort</h1>
 		<ul id="canvas">
 		</ul>
 	</body>
