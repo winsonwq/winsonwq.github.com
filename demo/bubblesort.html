@@ -7,7 +7,8 @@
 			#canvas{position:absolute;left:100px;top:300px;}
 			li.active{background:brown !important;}
 			li{display:inline-block;bottom:0;left:0;position:absolute;border:1px solid #eee;-webkit-box-shadow:0 0 5px #bbb;-moz-box-shadow:0 0 5px #bbb;
-				-webkit-transition-property:background-color;-webkit-transition-duration:.6s;}
+				-webkit-transition-property:background-color;-webkit-transition-duration:.3s;
+				-moz-transition-property:background-color;-moz-transition-duration:.3s;}
 			li span{position:absolute;bottom:-22px}
 		</style>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
@@ -63,8 +64,8 @@
 				arr[ii].$el.addClass('active');
 				
 				setTimeout(function(){
-					arr[i].$el.animate({ left : leftTo }, 500);
-					arr[ii].$el.animate({ left : leftFrom }, 520, function(){
+					arr[i].$el.animate({ left : leftTo }, 300);
+					arr[ii].$el.animate({ left : leftFrom }, 320, function(){
 
 						arr[i].left = leftTo;
 						arr[ii].left = leftFrom;
@@ -78,7 +79,7 @@
 					
 						de.resolve();
 					});
-				}, 1000);
+				}, 500);
 								
 				return de.promise();
 			}
