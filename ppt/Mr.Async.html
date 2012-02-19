@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+	    <meta name="viewport" content="width=600" />
+	    <meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="description" content="Mr.Async introduction" />
+	    <meta name="author" content="Qiu Wang" />
+		<link rel="stylesheet" href="impress-base.css" type="text/css"/>
+		<style type="text/css">
+			#cover{width:500px}
+			#cover h1{font-size:90px;line-height:1em;margin-top:40px;letter-spacing:-8px;width:500px;}
+			#cover strong{color:red;}
+			.big-center{font-size:80px;line-height:1em;margin-top:180px;}
+			#answer{margin-left:100px;}
+			.slide h2, .step h2{padding:10px 0;}
+			.step h2{border-bottom:5px solid #ccc;}
+			.slide h2{border-bottom:5px solid yellowgreen;}
+			.slide.section2 h2{border-color:purple;}
+			.slide.section3 h2{border-color:brown;}
+			.slide.section4 h2{border-color:#0074ea;}
+			h1,h2{color:#000;}
+			pre.code.block{height:300px;overflow:auto;font-size:15px;}
+			#title h1{font-size:150px;letter-spacing:-8px;margin:0;}
+			#title h2{font-size:24px;font-style:italic;letter-spacing:-1px;padding-left:15px;}
+			.step.section{width:900px;height:650px;padding: 10px 60px;overflow:auto;}
+			#how-to-solve{padding:0;width:600px}
+			#how-to-solve p{font-size:60px;padding:0;margin:0;}
+			#how-to-solve p:first-child{font-size:90px;}
+			#how-to-solve ul{margin:0;}
+			#how-to-solve ul li{margin:0;line-height:1em;}
+			#excalmatory-mark{position:absolute;right:-50px;top:-50px;font-size:300px;}
+			#end{width:500px;text-align:center;}
+			#end strong{color:red;-webkit-transform:rotate(10deg);display:inline-block}
+			#end p{line-height:1em;margin:0;}
+			#end p:first-child{font-size:40px;}
+			#end p{font-size:200px;}
+			#end span a{font-size:15px;padding:5px 10px;}
+		</style>
+	</head>
+	<body>
+		<article id="impress">
+			
+			<section id="cover" class="step" data-x="-1000" data-y="-3000">
+				<h1>Why not using Async in <strong>this</strong> way ?</h1>
+		    </section>
+		
+			<section class="step slide" data-x="0" data-y="-3000">
+	        	<h2>Async in JavaScript have same structure</h2>
+				<ul>
+					<li>Event</li>
+					<li>Ajax</li>
+					<li>Callbacks</li>
+				</ul>
+				<h3>bind event<h3>
+				<pre class="code">
+document.getElementById('logo').addEventListener('click', function(evt){
+ 	// TODO
+});</pre>
+				<h3>nodejs create http server</h3>
+				<pre class="code">
+var http = require('http');
+http.createServer(function (req, res) {
+	res.writeHead(200, {'Content-Type': 'text/plain'});
+ 	res.end('Hello World\n');
+}).listen(1337, "127.0.0.1");</pre>
+		    </section>
+			
+		    <section class="step slide" data-x="1000" data-y="-3000">
+				<h2>What is asynchronism ?</h2>
+				<p>Is it</p>
+				<ul>
+					<li>just a setTimeout ?</li>
+					<li>or a event handler ?</li>
+					<li>or ajax call ?</li>
+				</ul>
+		    </section>
+		
+			<section class="step slide" data-x="2000" data-y="-3000">
+				<h2>What is asynchronism ?</h2>
+				<p id="answer" class="big-center">It is waiting.</p>
+		    </section>
+		
+			<section class="step slide section2" data-x="-1000" data-y="-2000">
+				<h2>Aren't you just bored with all callback asynchronism structures ?</h2>
+				<p>let's discuss the two situations:</p>
+				<ul>
+					<li>bubble sort with transition</li>
+					<li>print the next one of Fibonacci numbers once clicking on the page</li>
+				</ul>
+			</section>
+			
+			<section class="step slide section2" data-x="0" data-y="-2000">
+				<h2>Bubble sort with transition</h2>
+				<pre class="code">
+for(var i = 0, len = arr.length ; i < len - 1 ; i++){
+    for(var ii = i + 1; ii < len ; ii++){
+        if(arr[i] > arr[ii]){
+            // can not using transition here, why ?
+            swap(arr, i, ii);
+        }
+    }
+}</pre>
+			<p>it works like this</p>
+			<pre class="code">
+var arr = [1, 2, 3, 4, 5];
+for(var i = 0, len = arr.length ; i < len ; i++){
+    window.setTimeout(function(){
+        console.log(i);
+    }, 1000);
+} // always 5 in output.</pre>
+			</section>
+		
+			<section class="step slide section2" data-x="1000" data-y="-2000">
+				<h2>Bubble sort with transition</h2>
+				<h3>How to use transition ?</h3>
+				<p>So it's awkard that the algorithm is not useful. We must create a new one, but <strong>not easily understand</strong> the logic.</p>
+				<pre class="code block">
+function asyncBubbleSort(arr, i){
+        i = i || 0;
+        if(i == arr.length - 1) return;
+        (function innerBubble(arr, ii){
+                if(ii != arr.length){
+                        if(arr[i] > arr[ii]){
+                                asyncSwap(arr, i, ii, function(){
+                                        innerBubble(arr, ++ii);
+                                });  
+                        }else innerBubble(arr, ++ii);
+                }else{
+                        bubble(arr, ++i);
+                }
+        })(arr, i + 1);         
+}</pre>
+			</section>
+			
+			<section class="step slide section2" data-x="2000" data-y="-2000">
+				<h2>Bubble sort with transition</h2>
+				<h3>What we need ?</h3>
+				<p>reuse the basic logic to implement</p>
+				<pre class="code">
+for(var i = 0, len = arr.length ; i < len - 1 ; i++){
+    for(var ii = i + 1; ii < len ; ii++){
+        if(arr[i] > arr[ii]){
+            // how to ?
+            asyncSwap(arr, i, ii);
+        }
+    }
+}</pre>
+			<p>But how to do the asynchronous swapping ? :)</p>
+			</section>
+			
+			<section class="step slide section3" data-x="-1000" data-y="-1000">
+				<h2>Print the next one of Fibonacci numbers once clicking on the page</h2>
+				<p>It's very easy to get the algorithm</p>
+				<pre class="code">
+var fib = function () {
+
+    console.log(0);
+    console.log(1);
+
+    var a = 0, current = 1;
+    while (true) {
+        var b = a;
+        a = current;
+        current = a + b;
+
+        console.log(current);
+    }
+};</pre>
+			</section>
+		
+			<section class="step slide section3" data-x="0" data-y="-1000">
+				<h2>Print the next one of Fibonacci numbers once clicking on the page</h2>
+				<p>Awkard again. It's very difficult to stop the while loop. And the new logic is supposed to be like below :</p>
+				<pre class="code">
+$(document.body).one('click', function(){
+    console.log(0);
+    $(document.body).one('click', function(){
+        console.log(1);
+        var a = 0, current = 1;
+        $(document.body).click('click', function(){
+            var b = a;
+            a = current;
+            current = a + b;
+            console.log(current);
+        });
+    });
+});</pre>			
+			</section>
+			
+			<section class="step slide section3" data-x="1000" data-y="-1000">
+				<h2>Print the next one of Fibonacci numbers once clicking on the page</h2>
+				<h3>What we need is stoping the loop</h3>
+				<pre class="code">
+var fib = function () {
+	
+    $awaitEvent(document.body, 'click'); // waiting for clicking
+    console.log(0);
+    $awaitEvent(document.body, 'click'); // waiting for clicking
+    console.log(1);
+    var a = 0, current = 1;
+    while (true) {
+        var b = a;
+        a = current;
+        current = a + b;
+        $awaitEvent(document.body, 'click'); // waiting for clicking
+        console.log(current);
+    }
+};</pre>
+			</section>
+			
+			<section class="step slide section4" data-x="2000" data-y="-1000">
+				<h2>What we need to improve?</h2>
+				<ol>
+					<li>Improvement the code's readability</li>
+					<li>Implements won't change the basic logic</li>
+					<li>Remove so many callbacks</li>
+					<li>Execute asynchronism method in a synchronous way</li>
+				</ol>
+				<p>But the most important thing is changing your mind about asynchronism.</p>
+			</section>
+			
+			<section id="title" class="step" data-x="0" data-y="1000" data-scale="4">
+				<hgroup>
+					<h1>Mr.Async.js<h1>
+					<h2>A JavaScript Asynchronism Improvement Library</h2>
+				</hgroup>
+			</section>
+		
+			<section id="mr-async-intro" class="step section" data-x="1000" data-y="3500" data-rotate="90" data-scale="2">
+				<h2>What Mr.Async.js is</h2>
+				<p><a href="https://github.com/winsonwq/Mr.Async">Mr.Async.js</a> is a JavaScript asynchronism improvement library for developers to use a better way to write asynchronism method.</p>
+				<p>It contains three parts</p>
+				<ol>
+					<li>Mr.AsynIterator</li>
+					<li>Mr.Deferred</li>
+					<li>Mr.Interpreter</li>
+				</ol>
+			</section>
+			
+			<section id="first-part" class="step section" data-x="-500" data-y="3500" data-rotate="90" data-scale="2">
+				<h2>Mr.AsynIterator</h2>
+				<p>Mr.AsynIterator is a method to iterate a iteratable object. And there is a variant method call Mr.AsynFor for iterating the array object.</p>
+				<pre class="code">
+Mr.asynIterator(Mr.range('[0, 3)'), function(i){
+    Mr.asynIterator(Mr.range('[0, 3)'), function(ii){
+        console.log(i + ',' + ii);
+        window.setTimeout(this.callback(), 1000); // print each second.
+    }, this.callback()).start();
+}).start();</pre>
+			</section>
+			
+			<section id="second-part" class="step section" data-x="-2000" data-y="3500" data-rotate="90" data-scale="2">
+				<h2>Mr.Deferred</h2>
+				<p>Mr.Deferred is a implementation of CommonJS Promise/A. It helps developer to bind callback functions like chain calls in jQuery. And There is method called <strong>Mr.when</strong> using for waiting for multiple Mr.Deferred() object.</p>
+				<pre class="code">
+function asynFn(){
+    var dfd = Mr.Deferred();
+    setTimeout(function(){
+        dfd.resolve(1, 1, 1, 1, 1); // success
+    }, Math.random(1) * 2000);
+    setTimeout(function(){
+        dfd.reject(2, 2, 2, 2, 2); // failure
+    }, Math.random(1) * 2500);
+    return dfd.promise();
+}</pre>
+			</section>
+			
+			<section id="second-part-2" class="step section" data-x="-3500" data-y="3500" data-rotate="90" data-scale="2">
+			<pre class="code">
+asynFn().done(function(){
+        console.log('done');
+        console.log(arguments);
+    })
+    .fail(function(){
+        console.log('fail');
+        console.log(arguments);
+    })
+    .always(function(){
+        console.log('always');
+        console.log(arguments);
+    })
+    .then(
+        function(){
+            console.log('then->done');
+            console.log(arguments);
+        }, 
+        function(){
+            console.log('then->fail');
+            console.log(arguments);
+        });</pre>			
+			</section>
+			
+			<section id="third-part" class="step section" data-x="-5000" data-y="3500" data-rotate="90" data-scale="2">
+				<h2>Mr.Interpreter</h2>
+				<ul>
+					<li>Mr.Interpreter help developers use a more readable way to write asynchronism method. Using this module, developer can use <strong>$await</strong> method/keyword to wait for asynchronous code execution.</li>
+					<li>Actually, Mr.Interpreter is a recoder/interpreter to generate new target javascript code and run. And the target code is just a combination including Mr.AsynIterator and Mr.Deferred modules.</li>
+					<li>And it has already supported $await keyword in <strong>code statement, for/while/do-while loop, switch/if-else block, variable assignment</strong>. <a href="https://github.com/winsonwq/Mr.Async">More on github</a></li>
+				</ul>
+			</section>
+			
+			<section id="how-to-solve" class="step" data-x="4200" data-y="1000" data-rotate="-90" data-scale="4">
+				<p>LET'S SOLVE</p>
+				<ul>
+					<li>bubble sort with transition</li>
+					<li>print the next one of Fibonacci numbers once clicking on the page</li>
+				</ul>
+				<p>USING Mr.Async.js <span id="excalmatory-mark">!</span></p>
+			</section>
+			
+			<section id="bubblesort-solution" class="step section" data-x="8000" data-y="-3000" data-z="0" data-scale="4">
+				<h2>Bubble sort with transition</h2>
+				<pre class="code">
+eval(Mr.Async.recode(function(){
+    for(var i = 0, len = arr.length ; i < len - 1 ; i++){
+        for(var ii = i + 1; ii < len ; ii++){
+            if(arr[i] > arr[ii]){
+                // waiting for swapping
+                $await(asyncSwap(arr, i, ii));
+            }
+        }
+    }
+})).start();</pre>
+			</section>
+
+			<section id="fibonacci-solution" class="step section" data-x="8000" data-y="1000" data-z="-1000" data-rotate-x="-20" data-rotate-y="10" data-scale="4">
+				<h2>Print the next one of Fibonacci numbers once clicking on the page</h2>
+				<pre class="code">
+eval(Mr.Async.recode(function(){
+    $await(once(document.body, 'click')); // waiting for clicking
+    console.log(0);
+
+    $await(once(document.body, 'click')); // waiting for clicking
+    console.log(1);
+
+    var a = 0, current = 1;
+    while (true) { // still in while loop
+        var b = a;
+        a = current;
+        current = a + b;
+        $await(once(document.body, 'click')); // waiting for clicking
+        console.log(current);
+    }
+}));</pre>
+			</section>
+			
+			<section id="fancy-solution" class="step section" data-x="8000" data-y="5000" data-z="-1000" data-rotate-x="-40" data-rotate-y="20" data-scale="4">
+				<h2>Even can easily do this</h2>
+				<p>This is a common asynchronism method.</p>
+				<pre class="code">
+function request(url, callback){
+    var dfd = Mr.Deferred();
+    $.ajax({
+        url : url,
+        type : 'GET',
+        success : function(json){
+            dfd.resolve(json);
+            if(typeof callback == 'function')
+                callback(json);
+        }
+    });
+    return dfd.promise();
+}
+</pre>
+			</section>
+			
+			<section id="fancy-solution2" class="step section" data-x="9000" data-y="9000" data-z="-2000" data-rotate-x="-60" data-rotate-y="30" data-scale="4">
+				<h2>Using Mr.Deferred</h2>
+				<pre class="code">
+request('http://urldemo.com').done(function(json){
+    // TODO
+});
+</pre>
+				<h2>Using Mr.Interpreter</h2>
+				<pre class="code">
+eval(Mr.Async.recode(function(){
+    var json_a = $await(request('http://urldemo.com'));
+    var json_b = $await(request('http://urldemo.com?id=' + json_a.id));
+    var json_c = $await(request('http://urldemo.com?id=' + json_b.id));
+    console.log(json_c);
+})).start();
+</pre>
+			</section>
+			
+			<section id="end" class="step" data-x="0" data-y="10000" data-z="-5000" data-rotate-x="0" data-scale="4">
+				<p><strong>THIS</strong> is Mr.Async.js</p>
+				<p>END</p>
+				<span><a href="mailto:qiuwang@thoughtworks.com">Wang Qiu</a></span>
+			</section>
+			
+			<!-- <div id="overview" class="step" data-x="3000" data-y="1500" data-scale="10">
+			</div> -->
+		</article>
+		<script src="impress.js"></script>
+		<script>impress();</script>
+	</body>
+</html>
