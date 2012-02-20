@@ -40,7 +40,7 @@
 					$('<div></div>').addClass('number').text(number).appendTo(document.body);
 				}
 						
-				var fibonacci = eval(Mr.Async.recode(function(){
+				var code = Mr.Async.recode(function(){
 					$await(once(document.body, 'click'));
 					print(0);
 					
@@ -57,7 +57,9 @@
 						print(current);
 					}
 					
-				})).start();
+				});
+				
+				var fibonacci = eval(code).start();
 			});
 		</script>
 	</head>

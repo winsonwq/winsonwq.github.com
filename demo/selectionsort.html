@@ -88,22 +88,26 @@
 			$(function(){
 				var objs = initialize(values);
 				var c = 0;
-				var bubbleSort = eval(Mr.Async.recode(function(array){
+				var selectionSort = eval(Mr.Async.recode(function(array){
 					for(var i = 0, len = array.length; i < len - 1 ; i++){
-						for(var ii = 0; ii < len - i - 1 ; ii++){
-							if(array[ii].val > array[ii + 1].val){
-								$await(asyncSwap(array, ii, ii + 1));
+						var min = i;
+						for(var ii = i + 1; ii < len ; ii++){
+							if(array[min].val > array[ii].val){
+								min = ii;
 							}
+						}
+						if(i != min){
+							$await(asyncSwap(array, i, min));
 						}
 					}
 				}));
 				
-				bubbleSort.start(objs);
+				selectionSort.start(objs);
 			});
 		</script>
 	</head>
 	<body>
-		<h1>BubbleSort</h1>
+		<h1>SelectionSort</h1>
 		<ul id="canvas">
 		</ul>
 	</body>

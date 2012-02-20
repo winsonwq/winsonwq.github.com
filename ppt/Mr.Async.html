@@ -94,10 +94,10 @@ http.createServer(function (req, res) {
 				<h2>Bubble sort with transition</h2>
 				<pre class="code">
 for(var i = 0, len = arr.length ; i < len - 1 ; i++){
-    for(var ii = i + 1; ii < len ; ii++){
-        if(arr[i] > arr[ii]){
+    for(var ii = 0; ii < len - i - 1; ii++){
+        if(arr[ii] > arr[ii + 1]){
             // can not using transition here, why ?
-            swap(arr, i, ii);
+            swap(arr, ii, ii + 1);
         }
     }
 }</pre>
@@ -120,16 +120,16 @@ function asyncBubbleSort(arr, i){
         i = i || 0;
         if(i == arr.length - 1) return;
         (function innerBubble(arr, ii){
-                if(ii != arr.length){
-                        if(arr[i] > arr[ii]){
-                                asyncSwap(arr, i, ii, function(){
+                if(ii != arr.length - i - 1){
+                        if(arr[ii] > arr[ii + 1]){
+                                asyncSwap(arr, ii, ii + 1, function(){
                                         innerBubble(arr, ++ii);
                                 });  
                         }else innerBubble(arr, ++ii);
                 }else{
                         bubble(arr, ++i);
                 }
-        })(arr, i + 1);         
+        })(arr, 0);         
 }</pre>
 			</section>
 			
@@ -139,10 +139,10 @@ function asyncBubbleSort(arr, i){
 				<p>reuse the basic logic to implement</p>
 				<pre class="code">
 for(var i = 0, len = arr.length ; i < len - 1 ; i++){
-    for(var ii = i + 1; ii < len ; ii++){
-        if(arr[i] > arr[ii]){
+    for(var ii = 0; ii < len - i - 1 ; ii++){
+        if(arr[ii] > arr[ii + 1]){
             // how to ?
-            asyncSwap(arr, i, ii);
+            asyncSwap(arr, ii, ii+1);
         }
     }
 }</pre>
@@ -314,10 +314,10 @@ asynFn().done(function(){
 				<pre class="code">
 eval(Mr.Async.recode(function(){
     for(var i = 0, len = arr.length ; i < len - 1 ; i++){
-        for(var ii = i + 1; ii < len ; ii++){
-            if(arr[i] > arr[ii]){
+        for(var ii = 0; ii < len - i - 1 ; ii++){
+            if(arr[ii] > arr[ii + 1]){
                 // waiting for swapping
-                $await(asyncSwap(arr, i, ii));
+                $await(asyncSwap(arr, ii, ii + 1));
             }
         }
     }
