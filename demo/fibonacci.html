@@ -19,49 +19,7 @@
 			}
 		</style>
 		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-		<script type="text/javascript" src="https://raw.github.com/winsonwq/Mr.Async/master/Mr.Async.js"></script>
-		<script type="text/javascript" src="https://raw.github.com/winsonwq/Mr.Async/master/Recoder/ExpressionVisitor.js"></script>
-		<script type="text/javascript" src="https://raw.github.com/winsonwq/Mr.Async/master/Recoder/parser.js"></script>
-		<script type="text/javascript" src="https://raw.github.com/winsonwq/Mr.Async/master/Recoder/Mr.Recoder.js"></script>
-		<script type="text/javascript" src="https://raw.github.com/winsonwq/Mr.Async/master/Mr.Async.Interpreter.js"></script>
-		<script type="text/javascript">			
-			$(function(){		
-				function once(dom, event){
-					var de = Mr.Deferred();
-					
-					$(dom).one(event, function(){
-						de.resolve();
-					});
-					
-					return de.promise();
-				}
-				
-				function print(number){
-					$('<div></div>').addClass('number').text(number).appendTo(document.body);
-				}
-						
-				var code = Mr.Async.recode(function(){
-					$await(once(document.body, 'click'));
-					print(0);
-					
-					$await(once(document.body, 'click'));
-					print(1);
-					
-					var a = 0, current = 1;
-					while(true){
-						var b = a;
-						a = current;
-						current = a + b;
-						
-						$await(once(document.body, 'click'));
-						print(current);
-					}
-					
-				});
-				
-				var fibonacci = eval(code).start();
-			});
-		</script>
+		<script data-main="fibonacci" type="text/javascript" src="http://requirejs.org/docs/release/1.0.6/minified/require.js"></script>
 	</head>
 	<body>
 		<h1>FIBONACCI</h1>
