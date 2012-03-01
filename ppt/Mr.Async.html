@@ -233,7 +233,7 @@ var fib = function () {
 				<ol>
 					<li>Mr.AsynIterator</li>
 					<li>Mr.Deferred</li>
-					<li>Mr.Interpreter</li>
+					<li>Mr.Async.Interpreter</li>
 				</ol>
 			</section>
 			
@@ -291,10 +291,10 @@ asynFn().done(function(){
 			</section>
 			
 			<section id="third-part" class="step section" data-x="-5000" data-y="3500" data-rotate="90" data-scale="2">
-				<h2>Mr.Interpreter</h2>
+				<h2>Mr.Async.Interpreter</h2>
 				<ul>
-					<li>Mr.Interpreter help developers use a more readable way to write asynchronism method. Using this module, developer can use <strong>$await</strong> method/keyword to wait for asynchronous code execution.</li>
-					<li>Actually, Mr.Interpreter is a recoder/interpreter to generate new target javascript code and run. And the target code is just a combination including Mr.AsynIterator and Mr.Deferred modules.</li>
+					<li>Mr.Async.Interpreter help developers use a more readable way to write asynchronism method. Using this module, developer can use <strong>$await</strong> method/keyword to wait for asynchronous code execution.</li>
+					<li>Actually, Mr.Async.Interpreter is a recoder/interpreter to generate new target javascript code and run. And the target code is just a combination including Mr.AsynIterator and Mr.Deferred modules.</li>
 					<li>And it has already supported $await keyword in <strong>code statement, for/while/do-while loop, switch/if-else block, variable assignment</strong>. <a href="https://github.com/winsonwq/Mr.Async">More on github</a></li>
 				</ul>
 			</section>
@@ -371,7 +371,7 @@ request('http://urldemo.com').done(function(json){
     // TODO
 });
 </pre>
-				<h2>Using Mr.Interpreter</h2>
+				<h2>Using Mr.Async.Interpreter</h2>
 				<pre class="code">
 eval(Mr.Async.recode(function(){
     var json_a = $await(request('http://urldemo.com'));
