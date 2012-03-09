@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+	    <meta name="viewport" content="width=600" />
+	    <meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="description" content="Dive Into JavaScript Session 1" />
+	    <meta name="author" content="Qiu Wang" />
+		<link rel="stylesheet" href="impress-base.css" type="text/css"/>
+		<style type="text/css">
+			#cover{padding:50px;letter-spacing:-6px;}
+			#cover h1{font-size:100px;line-height:1em;margin-top:40px;text-align:center;}
+			#sessionNumber{font-size:120px;line-height:150px;display:block;color:white;font-weight:bold;
+				background:red;width:150px;height:150px;text-align:center;margin:0 auto;}
+			.big-center{font-size:40px;line-height:1em;margin-top:180px;}
+			strong{background:#eee;color:#444;padding:0 10px}
+			.small{font-size: 20px;}
+			.slide h2, .step h2{padding:10px 0;}
+			.step h2{border-bottom:5px solid #ccc;}
+			.slide h2{border-bottom:5px solid yellowgreen;}
+			.slide.section2 h2{border-color:purple;}
+			.slide.section3 h2{border-color:brown;}
+			.slide.section4 h2{border-color:#0074ea;}
+			h1,h2{color:#000;}
+			p img{width:780px;}
+		</style>
+	</head>
+	<body>
+		<article id="impress">
+			
+			<section id="cover" class="step" data-x="-1000" data-y="-3000">
+				<h1>Dive Into JavaScript</h1>
+				<strong id="sessionNumber">1</strong>
+		    </section>
+		
+			<section class="step slide" data-x="0" data-y="-3000">
+	        	<h2>What's is JavaScript ?</h2>
+				<ul>
+					<li>was developed by <strong>Brendan Eich</strong> of Netscape under the name <strong>Mocha</strong>, which was later renamed to <strong>LiveScript</strong>, and finally to JavaScript because a joint announcement with Sun Microsystems on December 4, 1995</li>
+					<li>dynamic, weakly typed, prototype-based scripting language</li>
+					<li>ECMA International create <strong>ECMAScript</strong> specification based on JavaScript from Netscape</li>
+					<li>works in both of client and server side</li>
+				</ul>
+				<pre class="code">
+var obj = new Object
+obj.property1 = 1
+obj.property2 = function(){
+	console.log(obj.property1);
+};
+</pre>
+		    </section>
+			
+		    <section class="step slide" data-x="1000" data-y="-3000">
+				<h2>What is JavaScript ?</h2>
+				<p>
+					<img src="resources/images/JavaScriptHistory.png" width="780"/>
+				</p>
+				<p class="small">highlight: ECMAScript 1st + 2nd edition at Oct. 1998, 3rd edition at Nov. 2000.</p>
+		    </section>
+		
+			<section class="step slide" data-x="2000" data-y="-3000">
+				<h2>ECMAScript History</h2>
+				<p>
+					<img src="resources/images/ECMAScriptHistory.png" width="780"/>
+				</p>
+				<p class="small">wiki address: <a href="http://en.wikipedia.org/wiki/ECMAScript">http://en.wikipedia.org/wiki/ECMAScript</a>
+		    </section>
+		
+			<section class="step slide" data-x="-1000" data-y="-2000">
+				<h2>JavaScript/ECMAScript Version Mapping</h2>
+				<p>
+					<img src="resources/images/JavaScriptToESMapping.png" width="780"/>
+				</p>
+				<p class="small">wiki address: <a href="http://en.wikipedia.org/wiki/ECMAScript">http://en.wikipedia.org/wiki/ECMAScript</a>
+			</section>
+			
+			<section class="step slide section2" data-x="0" data-y="-2000">
+				<h2>JavaScript Objects</h2>
+				<p>In JavaScript, almost everything is an object. All primitive types except <strong>null</strong> and <strong>undefined</strong> are treated as objects. They can be assigned properties (assigned properties of some types are not persistent), and they have all characteristics of objects.</p>
+				<ul>
+					<li>Function</li>
+					<li>Object</li>
+					<li>Number</li>
+					<li>String</li>
+					<li>Boolean</li>
+					<li>Date</li>
+					<li>Array</li>
+					<li>RegExp</li>
+				</ul>
+			</section>
+		
+			<section class="step slide section2" data-x="1000" data-y="-2000">
+				<h2>JavaScript Objects</h2>
+				<h3>Function</h3>
+				<p>Every function in JavaScript is actually a Function object.</p>
+				<pre class="code">
+// synax
+new Function ([arg1[, arg2[, ... argN]],] functionBody)</pre>
+				<pre class="code">
+// example
+var myFunc = new Function(['a'], 'this.inner = a;');</pre>
+				<h4>Important Property</h4>
+				<p><strong>prototype</strong> property allows the extension of all Function objects. And every function object have the property.</p>
+				<pre class="code">
+myFunc.prototype.hello = function(text){
+    console.log('Hi,' + text);
+}</pre>
+				</section>
+			
+			<section class="step slide section2" data-x="2000" data-y="-2000">
+				<h2>JavaScript Objects</h2>
+				<h3>Object</h3>
+				<p>A instance of Function used to creates an object wrapper for the given value. If the value is null or undefined, it will create and return an empty object, otherwise, it will return an object of a type that corresponds to the given value.</p>
+				<pre class="code">
+new Object(value)</pre>
+				<pre class="code">
+// example
+var bool = new Object(true);
+var num = new Object(1);
+var string = Object('string');</pre>
+				<p><strong>prototype</strong> property allows the extension of all objects.</p>
+				<!-- <p><strong>constructor</strong> property to specifies the function that creates an object's prototype.</p> -->
+			</section>
+			
+			<section class="step slide section3" data-x="-1000" data-y="-1000">
+				<h2>How To Create A Object</h2>
+				<ul>
+					<li>Using function object<pre class="code">var obj = new Clazz(1, 2, 3);</pre></li>
+					<li>A easy way for 'new Object'<pre class="code">var obj = { property : 1 };</pre></li>
+					<li>
+						Using Object.create method(JavaScript 1.8.5/ECMAScript 5th Edition)
+						<pre class="code">
+// var obj = Object.create(proto, propertiesObject);
+var obj = Object.create({ property : 1 }, { p: { value: 42 } });
+obj.p // 42
+Object.getPrototypeOf(o).property // 1
+obj.__proto__.property // 1</pre>
+					</li>
+				</ul>
+			</section>
+		
+			<section class="step slide section3" data-x="0" data-y="-1000">
+				<h2>Prototype-based JavaScript</h2>
+				<h3><strong>constructor</strong></h3>
+				<p>constructor property is the function object to create the object's prototype(__proto__). All objects <strong>inherit</strong> a constructor property from their prototype.</p>
+				<pre class="code">
+// Build-In Class
+var obj = new Object;
+obj.hasOwnProperty('constructor'); // false
+obj.constructor; // function Object() { [native code] }
+// Custom Class
+function MyClass(){}
+var myObj = new MyClass;
+myObj.hasOwnProperty('constructor'); // false
+myObj.constructor; // function MyClass(){}
+
+// Function.constructor
+Function.hasOwnProperty('constructor'); // false
+Function.prototype.constructor === Function; // true
+</pre>
+			</section>
+			
+			<section class="step slide section3" data-x="1000" data-y="-1000">
+				<h2>Prototype-based JavaScript</h2>
+				<h3><strong>prototype</strong></h3>
+				<p>Every instances inherit from it's prototype. And the prototype property defined in the object's constructor. In another word, every function object have <strong>prototype</strong> property.</p>
+				<pre class="code">
+function MyClass(){}
+MyClass.prototype; // { constructor : MyClass, __proto__ : Object.prototype }
+MyClass.hasOwnProperty('prototype'); // true
+MyClass.prototype.hello = function(){};
+
+var myObj = new MyClass();
+myObj.constructor === MyClass; // true
+myObj.hello // function(){};
+</pre>
+			</section>
+			
+			<section class="step slide section3" data-x="2000" data-y="-1000">
+				<h2>Prototype-based JavaScript</h2>
+				<h3><strong>__proto__ / Object.getPropertyOf(obj)</strong></h3>
+				<p>property value is a reference to its prototype object. Generally, the value will be the prototype value of the constructor of this object. </p>
+				<pre class="code">
+var myStr = 'abcd';
+myStr.constructor === String; // true
+myStr.__proto__ === String.prototype; // true
+// interesting, why?
+(1).__proto__ == 0;
+</pre>
+				<p>But there are 2 special exceptions.</p>
+				<pre class="code">Object.prototype.__proto__ === null; // true</pre>
+				<pre class="code">
+function MyClass(){} // cunstom or native function object like Array, Number
+MyClass.prototype.constructor === MyClass; // true
+MyClass.prototype.__proto__ === MyClass.prototype; // false
+MyClass.prototype.__proto__ === Object.prototype; // actually, it's true
+</pre>
+			</section>
+			
+			<section class="step slide" data-x="-1000" data-y="0">
+				<h2>All - JavaScript Objects Relation</h2>
+				<p><a href="resources/images/JavaScriptObjectsRelation.jpg"><img src="resources/images/JavaScriptObjectsRelation.jpg"></a></p>
+			</section>
+			
+			<!-- 			<div id="overview" class="step" data-x="3000" data-y="1500" data-scale="10">
+						</div> -->
+		</article>
+		<script src="impress.js"></script>
+		<script>impress();</script>
+	</body>
+</html>
