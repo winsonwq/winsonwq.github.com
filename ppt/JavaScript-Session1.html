@@ -133,7 +133,7 @@ var string = Object('string');</pre>
 // var obj = Object.create(proto, propertiesObject);
 var obj = Object.create({ property : 1 }, { p: { value: 42 } });
 obj.p // 42
-Object.getPrototypeOf(o).property // 1
+Object.getPrototypeOf(obj).property // 1
 obj.__proto__.property // 1</pre>
 					</li>
 				</ul>
