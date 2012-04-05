@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF8">
+		<metaname="viewport"content="width=device-width; initial-scale=1.0">
+		<style type="text/css">
+			body{margin:0;background:#000;color:#fff;font:15px/1.25 calibri;}
+			p{padding:0;margin:0;}
+			h1{padding:0 10px;margin:0;line-height:50px;}
+			.message{margin-bottom:20px;padding:8px;position:relative;clear:both;word-wrap: break-word;max-width:80%;min-width:100px;}
+			.msg-left{background:#006000;float:left;}
+			.msg-right{background:green;float:right;}
+			.message .msg-left-end, .message .msg-right-end{display:block;width:0;border:5px solid #006000;position:absolute;bottom:-10px;}
+			.message .msg-left-end{border-color:#006000 transparent transparent #006000;}
+			.message .msg-right-end{border-color:green green transparent transparent;right:10px;}
+			
+			#message-list{position:absolute;top:50px;bottom:20px;overflow:auto;padding:10px;right:0;left:0;}
+			#message-bar{position:absolute;bottom:0px;left:0;right:0;padding-right:50px;}
+			#message-bar input{border:1px solid #fff;background:#000;margin:0;padding:0;color:#fff;padding:5px;outline:none;font-size:15px;font-family:calibri;}
+			#message-bar input[type=text]{background:#444;width:100%;float:left;}
+			#message-bar input[type=submit]{color:#fff;width:40px;float:right;margin-right:-52px;position:relative;left:-2px;}
+		</style>
+		<script type="text/javascript">
+			window.onload = function(){
+				function createDOM(tagName){
+					return document.createElement(tagName);
+				}
+				
+				function $(id){
+					return document.getElementById(id);
+				}
+				
+				function createMessageDOM(text){
+					var message = createDOM('div');
+					message.className = 'msg-right message';
+					
+					var textWrapper = createDOM('p');
+					textWrapper.innerText = text;
+					
+					var messageEnd = createDOM('span');
+					messageEnd.className = 'msg-right-end';
+					
+					message.appendChild(textWrapper);
+					message.appendChild(messageEnd);
+					
+					return message;
+				}
+				
+				$('message-form').addEventListener('submit', function(evt){
+					var messageTextDOM = $('message-text');
+					var text = messageTextDOM.value;
+					var messageDOM = createMessageDOM(text);
+					$('message-list').appendChild(messageDOM);
+					
+					messageTextDOM.value = '';
+					
+					$('message-list').scrollTop = '99999';
+				}, false);
+			};
+		</script>
+	</head>
+	<body>
+		<h1>小强</h1>
+		<div id="message-list">
+			<div class="msg-left message">
+				<p>今天是4月6号，我们在开发Windows Phone 7的短信界面</p>
+			<span class="msg-left-end"></span>
+			</div>
+			<div class="msg-right message">
+				<p>我正在实现，你别烦了好不好？</p>
+			<span class="msg-right-end"></span>	
+			</div>
+			
+		</div>
+		<div id="message-bar">
+			<form method="post" onsubmit="return false;" id="message-form">
+				<input id="message-text" type="text"/><input type="submit" value="Send"/>
+			</form>
+		</div>
+	</body>
+</html>
