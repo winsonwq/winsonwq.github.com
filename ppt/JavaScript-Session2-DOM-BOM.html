@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+	    <meta name="viewport" content="width=600" />
+	    <meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="description" content="Dive Into JavaScript Session 1" />
+	    <meta name="author" content="Qiu Wang" />
+		<link rel="stylesheet" href="impress-base.css" type="text/css"/>
+		<style type="text/css">
+			#cover{padding:50px;letter-spacing:-6px;}
+			#cover h1{font-size:100px;line-height:1em;margin-top:40px;text-align:center;}
+			#sessionNumber{font-size:120px;line-height:150px;display:block;color:white;font-weight:bold;
+				background:red;width:150px;height:150px;text-align:center;margin:0 auto;}
+			.big-center{font-size:40px;line-height:1em;margin-top:180px;}
+			strong{background:#eee;color:#444;padding:0 10px}
+			.small{font-size: 20px;}
+			.slide h2, .step h2{padding:10px 0;}
+			.step h2{border-bottom:5px solid #ccc;}
+			.slide h2{border-bottom:5px solid yellowgreen;}
+			.slide.section2 h2{border-color:purple;}
+			.slide.section3 h2{border-color:brown;}
+			.slide.section4 h2{border-color:#0074ea;}
+			h1,h2{color:#000;}
+			p img{width:780px;}
+			.imgline{height:150px;width:auto;}
+			li pre.code{margin:0;}
+			#outer,#inner{color:green}
+			#outer{padding:10px;border:2px dashed purple;position:relative;}
+			#inner{padding:10px;border:2px dotted #0074ea;position:absolute;bottom:-100px;left:0;right:0}
+			#end{font-size:150px;background:none;display:inline-block;width:800px;text-align:center;}
+		</style>
+	</head>
+	<body>
+		<article id="impress">
+			
+			<section id="cover" class="step" data-x="-1000" data-y="-3000">
+				<h1>Dive Into JavaScript</h1>
+				<strong id="sessionNumber">2</strong>
+		    </section>
+		
+			<section class="step slide" data-x="0" data-y="-3000">
+	        	<h2>What's BOM ?</h2>
+				<p>
+					The <strong>Browser Object Model (BOM)</strong> is a browser-specific convention referring to all the objects exposed by the web browser. 
+				</p>
+				<p>
+					There is no standard for implementation and no strict definition, so browser vendors are free to implement the BOM in anyway they wish.
+				</p>
+				<p style="text-align:center;margin-top:50px;">
+					<img class="imgline" src="resources/images/firefox.png"/>
+					<img class="imgline" src="resources/images/chrome.jpg"/>
+					<img class="imgline" src="resources/images/IE9.png"/>
+					<img class="imgline" src="resources/images/Opera.png"/>
+				</p>
+			</section>
+			
+		    <section class="step slide" data-x="1000" data-y="-3000">
+	        	<h2>What's BOM ?</h2>
+	        	<script type="text/javascript">
+	        		function A(){}
+	        		var a = 1;
+	        		b = 2;
+	        	</script>
+<pre class="code">window
+  ├── history
+  ├── navigator
+  │ ├── geolocation
+  │ └── userAgent
+  ├── location
+  │<strong>All objects above are basic BOM object</strong>
+  ├────────────────────────────────
+  ├── <strong>document</strong> : link to the DOM
+  ├── Function
+  ├── Date
+  ├── Boolean
+  ├── <strong>function A(){}</strong>
+  └── <strong>var a;</strong></pre>
+  				<p><strong>window</strong> object is the top level object in one browser. You can visit very thing if you know the object.</p>
+		    </section>
+		
+			<section class="step slide" data-x="2000" data-y="-3000">
+				<h2>What is DOM ?</h2>
+				<p>
+					The <strong>Document Object Model (DOM)</strong> is a cross-platform and language-independent convention for representing and interacting with objects in HTML, XHTML and XML documents.
+				</p>
+				<pre class="code"> Document
+  └── Element (html)
+    └── Element (body)
+      ├── Element (div)
+      │ ├── text node
+      │ └── Anchor
+      │   └── text node
+      └── Form
+           ├── Text-box
+           ├── Text Area
+           ├── Radio Button
+           ├── Check Box
+           ├── Select
+           └── Button</pre>
+		    </section>
+		
+			<section class="step slide" data-x="-1000" data-y="-2000">
+				<h2>What is Node ? </h2>
+				<p>The base type of all DOM objects.</p>
+				<div id="commentWrapper"><!-- abcdefg --></div>
+<pre class="code" style="font-size:14px;">// Node types
+<strong>ELEMENT_NODE</strong> : common elements like body, input, button
+<strong>TEXT_NODE</strong> : only text, can use document.createTextNode to create
+ATTRIBUTE_NODE
+CDATA_SELECTION_NODE
+ENTITY_REFERENCE_NODE
+ENTITY_NODE
+PROCESSING_INSTRUCTION_NODE
+<strong>COMMENT_NODE</strong> : stand for the comments
+<strong>DOCUMENT_NODE</strong> : document object
+DOCUMENT_TYPE_NODE
+DOCUMENT_FRAGMENG_NODE
+NOTATION_NODE
+</pre>
+<p><strong>Practice</strong></p>
+<pre class="code">document.getElementById('commentWrapper').childNodes
+Node.prototype.__proto__ === Object.prototype; // true</pre>
+			</section>
+			
+			<section class="step slide" data-x="0" data-y="-2000">
+				<h2>What is Node ? </h2>
+				<p>Get these useful APIs from Node.prototye</p>
+				<ul>
+					<li>appendChild</li>
+					<li>removeChild</li>
+					<li>insertBefore</li>
+					<li>addEventListener</li>
+					<li>removeEventListener</li>
+					<li>hasChildNodes</li>
+				</ul>
+				<p>
+					<strong>You can check the othter through</strong>
+				</p>
+				<pre class="code">Node.prototype.appendChild
+// OR
+var div = document.createElement('div');
+div.appendChild(/* child */);
+</pre>
+			</section>
+		
+			<section class="step slide section2" data-x="1000" data-y="-2000">
+				<h2>What is Element ?</h2>
+				<ul>
+					<li>
+						Every tag in html/xml/xhtml stands for one element, such as <strong>&lt;body&gt;</strong> stands for <strong>HTMLBodyElement.</strong>
+					</li>
+					<li>
+						Element is inherited from Node
+						<pre class="code">Element.prototype.__proto__ === Node.prototype; // true</pre>
+					</li>
+				</ul>
+				<ul>
+					<li>
+						<p>getElementsByTagName</p>
+						<pre class="code">var matched = elem.<strong>getElementsByTagName('span')</strong>;</pre>
+					</li>
+					<li>
+						<p>getElementsByClassName</p>
+						<pre class="code">var matched = elem.<strong>getElementsByClassName('small')</strong>;</pre>
+					</li>
+					<li>
+						<p><strong>getAttribute</p>
+						<pre class="code">var src = img.<strong>getAttribute('src')</strong>;</pre>
+					</li>
+				</ul>
+			</section>
+			
+			<section class="step slide section2" data-x="2000" data-y="-2000">
+				<h2>What is Document ?</h2>
+				<p>
+					<strong>document</strong> object is the <strong>DOCUMENT_NODE</strong> of current document and a instance of Document type.
+				</p>
+				<pre class="code">Document.prototype.__proto__ === Node.prototype; // true</pre>
+				<ul style="font-size:16px">
+					<li>
+						<p>getElementById</p>
+						<pre class="code">var elem = document.<strong>getElementById</strong>('currentTime');</pre>
+					</li>
+					<li>getElementsByTagName</li>
+					<li>getElementsByClassName</li>
+					<li>
+						<p>createElement</p>
+						<pre class="code">var div = document.<strong>createElement</strong>('div');</pre>
+					</li>
+					<li>
+						<p>createTextNode</p>
+						<pre class="code">var textNode = document.<strong>createTextNode</strong>('hello world');</pre>
+					</li>
+				</ul>
+			</section>
+			
+			<section class="step slide section3" data-x="-1000" data-y="-1000">
+				<h2>DOM API : Insert/Remove/Append</h2>
+				<h3>Operations</h3>
+				<ul>
+					<li>
+						<strong>appendChild</strong>
+						<pre class="code">parent.appendChild(child)
+</pre>
+					</li>
+					<li>
+						<strong>insertBefore</strong>
+						<pre class="code">var inserted = parent.insertBefore(new, reference)
+</pre>
+					</li>
+					<li>
+						<strong>removeChild</strong>
+						<pre class="code">parent.removeChild(child)
+</pre>
+					</li>
+				</ul>
+				<ul>
+					<li>children</li>
+					<li>parentNode</li>
+				</ul>
+				<p class="small">how?</p>
+				<p class="small"><strong>$.insertAfter(node, referenceNode);</strong>/<strong>$.prepend(parentNode, newNode);</strong></p>
+			</section>
+		
+			<section class="step slide section3" data-x="0" data-y="-1000">
+				<h2>DOM API : DOM2 Event Binding</h2>
+				<ul>
+					<li>
+						<strong>addEventListener</strong>
+						<pre class="code">void addEvenetListener(eventType, listener, [optional] useCapture)
+</pre>
+					</li>
+					<li>
+						<strong>removeElementListener</strong>
+						<pre class="code">void removeEvenetListener(eventType, listener, [optional] useCapture)
+</pre>
+					</li>
+				</ul>
+				<pre class="code">function clickHandler(){
+    console.log(arguments);
+}
+elem1.addEvenetListener('click', clickHandler, false);
+elem1.removeEvenetListener('click', clickHandler, false);
+</pre>
+<p class="small">attachEvent/detachEvent in <strong>IE</strong></p>
+<p class="small">Events : load, click, mousedown, mouseup, mouseover, mouseout, keydown, keyup ... </p>
+			</section>
+			
+			<section class="step slide section3" data-x="1000" data-y="-1000">
+				<h2>DOM API : Event Object</h2>
+				<p>
+					Every event object like MouseEvent/KeyboradEvent is the descendant of <strong>Event</strong> object.
+				</p>
+				<ul>
+					<li>
+						<strong>preventDefault</strong>
+						<pre class="code">evt.preventDefault()
+</pre>
+					</li>
+					<li>
+						<strong>stopPropagation</strong>
+						<pre class="code">evt.stopPropagation()
+</pre>
+					</li>
+					<li>
+						<strong>stopImmediatePropagation</strong>
+						<pre class="code">evt.stopImmediatePropagation()
+</pre>
+					</li>
+					<ul class="small">
+						<li><strong>currentTarget</strong> : currently registered target for the event</li>
+						<li><strong>target</strong> : target to which the event was originally dispatched</li>
+					</ul>
+				</ul>
+			</section>
+			
+			<section class="step slide section3" data-x="2000" data-y="-1000">
+				<h2>DOM API : Bubble and Capture</h2>
+				<p>This is a demo using bubble</p>
+				<div class="demo">
+					<div id="outer">
+						<p>Click outer Box, alert 0</p>
+						<div id="inner">
+							<p>Click inner Box, alert 1, alert 0</p>
+						</div>
+					</div>
+				</div>
+				<script type="text/javascript">
+					var outer = document.getElementById('outer');
+					var inner = document.getElementById('inner');
+					
+					outer.addEventListener('click', function(evt){
+						console.log(evt.target);
+						alert(0);
+					}, false);
+					
+					inner.addEventListener('click', function(evt){
+						console.log(evt.currentTarget);
+						alert(1);
+					}, false);
+				</script>
+				<pre class="code" style="position:relative;top:100px">
+&lt;div id="outer"&gt;
+  &lt;p&gt;Click outer Box, alert 0&lt;/p&gt;
+  &lt;div id="inner"&gt;
+    &lt;p&gt;Click inner Box, alert 1, alert 0&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+				</pre>
+				<p class="small" style="position:relative;top:100px">how to use capture ??? </p>
+			</section>
+			
+			<section class="step slide" data-x="-1000" data-y="0">
+				<h2>DOM API : Once Implementation</h2>
+				<p>how to implement the <strong>once</strong> event method</p>
+				<pre class="code">one(elem1, 'click', function(evt){
+  console.log('just print once.');
+});
+</pre>
+				<div id="onceButton" style="padding:20px 10px;background:#eee;border:1px solid #666;cursor:pointer;float:left;">Click</div>
+				<script type="text/javascript">
+					function once(elem, eventType, handler){
+						elem.addEventListener(eventType, function(evt){
+							handler.call(elem, evt);
+							elem.removeEventListener(eventType, arguments.callee/*, false */);					
+						}, false)
+					}
+					once(document.getElementById('onceButton'), 'click', function(evt){
+						alert('just show once!');
+					});
+				</script>
+			</section>
+			
+			<section class="step slide" data-x="0" data-y="0">
+				<h2>DOM API : stop(Immediate)Propagation</h2>
+				<label class="small"><input id="stopChecked" type="checkbox"><strong>Use stopImmediatePropagation</strong></label>
+				<div class="demo">
+					<div id="outer2" class="small" style="padding:20px;border:2px dashed #0074ea;margin-top:10px;">
+						Outer, bind 1 click handler
+						<div id="inner2" class="small" style="padding:20px;border:2px dotted #000;">
+							Inner, bind 2 click handlers
+						</div>
+					</div>
+				</div>
+				<script type="text/javascript">
+					var outer2 = document.getElementById('outer2');
+					var inner2 = document.getElementById('inner2');
+					var stopChecked = document.getElementById('stopChecked');
+					
+					outer2.addEventListener('click', function(evt) {
+						alert('outer click 1.');
+					}, false);
+					
+					inner2.addEventListener('click', function(evt) {
+						alert('inner click 1.');
+						if(stopChecked.checked){
+							evt.stopImmediatePropagation();
+						}else{
+							evt.stopPropagation();
+						}
+						
+					}, false);
+					
+					inner2.addEventListener('click', function(evt) {
+						alert('inner click 2.');						
+					}, false);
+					
+				</script>
+			</section>
+
+			<section class="step" data-x="1000" data-y="0">
+				<strong id="end">END</strong>
+			</section>display:inline-block;width:900px;text-align:center;
+		</article>
+
+		<script src="impress.js"></script>
+		<script>impress();</script>
+	</body>
+</html>
