@@ -287,18 +287,18 @@ elem1.removeEvenetListener('click', clickHandler, false);
 					</div>
 				</div>
 				<script type="text/javascript">
-					var outer = document.getElementById('outer');
-					var inner = document.getElementById('inner');
-					
-					outer.addEventListener('click', function(evt){
-						console.log(evt.target);
-						alert(0);
-					}, false);
-					
-					inner.addEventListener('click', function(evt){
-						console.log(evt.currentTarget);
-						alert(1);
-					}, false);
+var outer = document.getElementById('outer');
+var inner = document.getElementById('inner');
+
+outer.addEventListener('click', function(evt){
+	console.log(evt.target);
+	alert(0);
+}, false);
+
+inner.addEventListener('click', function(evt){
+	console.log(evt.currentTarget);
+	alert(1);
+}, false);
 				</script>
 				<pre class="code" style="position:relative;top:100px">
 &lt;div id="outer"&gt;
@@ -306,30 +306,31 @@ elem1.removeEvenetListener('click', clickHandler, false);
   &lt;div id="inner"&gt;
     &lt;p&gt;Click inner Box, alert 1, alert 0&lt;/p&gt;
   &lt;/div&gt;
-&lt;/div&gt;
-				</pre>
-				<p class="small" style="position:relative;top:100px">how to use capture ??? </p>
+&lt;/div&gt;</pre>
+				<p class="small" style="position:relative;top:100px">visit code here : <a href="https://gist.github.com/2430135"><strong>script</strong></a></p>
+				<p class="small" style="position:relative;top:100px">visit image here : <a href="resources/images/bubbleCapture.png"><strong>bubble/capture</strong></a></p>
 			</section>
 			
 			<section class="step slide" data-x="-1000" data-y="0">
 				<h2>DOM API : Once Implementation</h2>
 				<p>how to implement the <strong>once</strong> event method</p>
-				<pre class="code">one(elem1, 'click', function(evt){
+				<pre class="code">once(elem1, 'click', function(evt){
   console.log('just print once.');
 });
 </pre>
 				<div id="onceButton" style="padding:20px 10px;background:#eee;border:1px solid #666;cursor:pointer;float:left;">Click</div>
 				<script type="text/javascript">
-					function once(elem, eventType, handler){
-						elem.addEventListener(eventType, function(evt){
-							handler.call(elem, evt);
-							elem.removeEventListener(eventType, arguments.callee/*, false */);					
-						}, false)
-					}
-					once(document.getElementById('onceButton'), 'click', function(evt){
-						alert('just show once!');
-					});
+function once(elem, eventType, handler){
+	elem.addEventListener(eventType, function(evt){
+		handler.call(elem, evt);
+		elem.removeEventListener(eventType, arguments.callee/*, false */);					
+	}, false)
+}
+once(document.getElementById('onceButton'), 'click', function(evt){
+	alert('just show once!');
+});
 				</script>
+				<p class="small" style="clear:left;">visit code here : <a href="https://gist.github.com/2430161"><strong>script</strong></a></p>
 			</section>
 			
 			<section class="step slide" data-x="0" data-y="0">
@@ -343,35 +344,37 @@ elem1.removeEvenetListener('click', clickHandler, false);
 						</div>
 					</div>
 				</div>
+				
+				<p class="small" style="clear:left;">visit code here : <a href="https://gist.github.com/2430172"><strong>script</strong></a></p>
 				<script type="text/javascript">
-					var outer2 = document.getElementById('outer2');
-					var inner2 = document.getElementById('inner2');
-					var stopChecked = document.getElementById('stopChecked');
-					
-					outer2.addEventListener('click', function(evt) {
-						alert('outer click 1.');
-					}, false);
-					
-					inner2.addEventListener('click', function(evt) {
-						alert('inner click 1.');
-						if(stopChecked.checked){
-							evt.stopImmediatePropagation();
-						}else{
-							evt.stopPropagation();
-						}
-						
-					}, false);
-					
-					inner2.addEventListener('click', function(evt) {
-						alert('inner click 2.');						
-					}, false);
+var outer2 = document.getElementById('outer2');
+var inner2 = document.getElementById('inner2');
+var stopChecked = document.getElementById('stopChecked');
+
+outer2.addEventListener('click', function(evt) {
+	alert('outer click 1.');
+}, false);
+
+inner2.addEventListener('click', function(evt) {
+	alert('inner click 1.');
+	if(stopChecked.checked){
+		evt.stopImmediatePropagation();
+	}else{
+		evt.stopPropagation();
+	}
+	
+}, false);
+
+inner2.addEventListener('click', function(evt) {
+	alert('inner click 2.');						
+}, false);
 					
 				</script>
 			</section>
 
 			<section class="step" data-x="1000" data-y="0">
 				<strong id="end">END</strong>
-			</section>display:inline-block;width:900px;text-align:center;
+			</section>
 		</article>
 
 		<script src="impress.js"></script>
