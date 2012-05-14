@@ -1,0 +1,27 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="../impress-base.css" type="text/css"/>
+	<style type="text/css">
+		body h2{margin:0;background:#000;}
+		h1{font-size:10px;}
+		#cover{font-size:80px important;}
+	</style>
+	<script type="text/javascript">
+		var style = document.styleSheets[1];
+		var rule = style.cssRules[0];
+		console.log(rule);
+
+		window.onload = function(){
+			cover = document.getElementById('cover');
+		};
+	</script>
+</head>
+<body>
+	<div id="cover" style="font-size:100px !important;color:blue;"></div>
+	<h1>abcdefg</h1>
+	<h2>abcdefg</h2>
+</body>
+</html>

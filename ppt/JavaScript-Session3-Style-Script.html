@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+	    <meta name="viewport" content="width=600" />
+	    <meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="description" content="Dive Into JavaScript Session 3" />
+	    <meta name="author" content="Qiu Wang" />
+		<link rel="stylesheet" href="impress-base.css" type="text/css" media="screen"/>
+		<style type="text/css">
+			@media screen and (max-width:10px){
+			    h1{font-size:3em;}
+			}
+			#cover{padding:50px;letter-spacing:-6px;}
+			#cover h1{font-size:100px;line-height:1em;margin-top:40px;text-align:center;}
+			#sessionNumber{font-size:120px;line-height:150px;display:block;color:white;font-weight:bold;
+				background:red;width:150px;height:150px;text-align:center;margin:0 auto;}
+			.big-center{font-size:40px;line-height:1em;margin-top:180px;}
+			strong{background:#eee;color:#444;padding:0 10px}
+			.small{font-size: 20px;}
+			.slide h2, .step h2{padding:10px 0;}
+			.step h2{border-bottom:5px solid #ccc;}
+			.slide h2{border-bottom:5px solid yellowgreen;}
+			.slide.section2 h2{border-color:purple;}
+			.slide.section3 h2{border-color:brown;}
+			.slide.section4 h2{border-color:#0074ea;}
+			pre.code{padding:0;}
+			h1,h2{color:#000;}
+			p img{width:780px;}
+			#end{font-size:150px;background:none;display:inline-block;width:800px;text-align:center;}
+			#cssDiv{background:yellowgreen;color:#fff;}
+			#output{font-size:14px;height:380px;overflow: auto;line-height:1.5em;font-family:consolas;padding:10px;border:1px solid #eee;margin-top:10px;}
+			#output span{color:green;}
+		</style>
+		<link rel="stylesheet" href="http://softwaremaniacs.org/media/soft/highlight/styles/monokai.css" type="text/css" media="screen">
+		<script type="text/javascript" src="http://softwaremaniacs.org/media/soft/highlight/highlight.pack.js"></script>
+		<script>
+	  hljs.tabReplace = '    ';
+	  hljs.initHighlightingOnLoad();
+	  // window.onload = function(){
+	  // 	var codes = document.getElementsByTagName('code');
+	  // 	for(var i = 0, len = codes.length; i < len ; i++)
+	  // 		hljs.highlightBlock(codes[i], null, false);
+	  // };
+	  </script>
+	</head>
+	<body>
+		<article id="impress">
+			
+			<section id="cover" class="step" data-x="-1000" data-y="-3000">
+				<h1>Dive Into JavaScript</h1>
+				<strong id="sessionNumber">3</strong>
+		    </section>
+		
+			<section class="step slide" data-x="0" data-y="-3000">
+	        	<h2>JavaScript and CSS</h2>
+	        	<p>DOM operation is the most important thing in web development. And most of operations are <strong>CSS operation by JavaScript.</strong></p>
+	        	<p>such as:</p>
+	        	<ul>
+	        		<li>show/hide</li>
+	        		<li>animation</li>
+	        		<li>theme change</li>
+	        		<li>game</li>
+					<li>dev tool like firebug lite</li>
+	        	</ul>
+		    </section>
+			
+		    <section class="step slide" data-x="1000" data-y="-3000">
+				<h2>CSS in Document</h2>
+				<p>We can <strong>load CSS file</strong> or <strong>write CSS</strong> in html document.</p>
+<pre class="code"><code>&lt;!-- 1. load css file --&gt;
+&lt;link rel="stylesheet" href="impress-base.css" type="text/css"&gt;
+&lt;!-- 2. css in document --&gt;
+&lt;style type="text/css"&gt;
+    body{font:italic small-caps bold 12px arial,sans-serif;}
+    h1{font-size:2.5em;}
+&lt;/style&gt;</code></pre>
+				<p>using javascript, we can visit these two style through <strong>styleSheets</strong> property :</p>
+<pre class="code javascript"><code>var stylesheets = document.styleSheets;
+console.log(Object.prototype.toString.call(stylesheets[0])); // "[Object CSSStyleSheet]"
+</code></pre>
+		    </section>
+		
+			<section class="step slide" data-x="2000" data-y="-3000">
+				<h2>CSSStyleSheet</h2>
+				<p>One <strong>CSSStyleSheet</strong> object will hold many css rules in side.</p>
+				<ul>
+					<li>cssRules</li>
+					<li>media</li>
+					<li>disabled</li>
+					<li>type</li>
+					<li>insertRule</li>
+					<li>deleteRule</li>
+				</ul>
+<pre class="code javascript"><code>var style = document.styleSheets[0];
+console.log('css rules : ' + style.cssRules.length);
+console.log('style type : ' + style.type); // "text/css"
+console.log('style media : ' + style.media[0]); // "screen"
+console.log('style disable? : ' + style.disabled); // false or true. have a try!
+</code></pre>
+<a href="http://www.w3.org/TR/DOM-Level-2-Style/css.html#CSS-CSSStyleSheet"><strong>More in W3C</strong></a>
+		    </section>
+		
+			<section class="step slide" data-x="-1000" data-y="-2000">
+				<h2>CSSRule</h2>
+				<p>CSSRule object means a rule in CSSStyleSheet. It can be selector/properties, @media type css, @import type css and etc. <a href="http://www.w3.org/TR/DOM-Level-2-Style/css.html#CSS-CSSRule"><strong>More in W3C</strong></a>
+				</p>
+				<ul>
+					<li>MEDIA_RULE</li>
+<pre class="code css"><code>@media screen and (max-width:560px), print and (max-width:200px){
+    h1{ font-size: 3em; }
+}
+</code></pre>
+					<li>STYLE_RULE
+<pre class="code css"><code>body{
+	margin: 0;
+	font: italic normal 14px/1.5 verdana;
+}
+</code></pre>
+					</li>
+				</ul>
+			</section>
+			
+			<section class="step slide section2" data-x="0" data-y="-2000">
+				<h2>CSSStyleRule</h2>
+				<p>One CSSStyleRule means one selector, many properties and values.</p>
+				<ul>
+					<li><strong>cssText</strong>: whole css text including selector and properties.</li>
+					<li><strong>selectorText</strong></li>
+					<li><strong>style</strong>: contains all properties and their values for the selector.</li>
+				</ul>
+<pre class="code"><code>#cover{ padding:50px; letter-spacing:-6px; }
+</code></pre>
+				<p>We can use</p>
+<pre class="code javascript"><code>var rule = document.styleSheets[1].cssRules[1];
+console.log('cssText : ' + rule.cssText); // "#cover{ padding:50px; letter-spacing:-6px; }"
+console.log('selectorText : ' + rule.selectorText); // "#cover"
+console.log('first property : ' + rule.style.item(0)); // "padding-top"
+console.log('property : ' + rule.style.padding; // "50px"
+</code></pre>
+			</section>
+		
+			<section class="step slide section2" data-x="1000" data-y="-2000">
+				<h2>CSSStyleDeclaration</h2>
+				<p>properties and values block. Already have many properties with value<a href="http://www.w3.org/TR/DOM-Level-2-Style/css.html#CSS-CSSStyleDeclaration"><strong>More in W3C</strong></a></p>
+				<ul>
+					<li><strong>cssText</strong> : all properties and value text</li>
+					<li><strong>getPropertyValue</strong></li>
+					<li><strong>getPropertyPriority</strong></li>
+					<li><strong>setProperty</strong></li>
+				</ul>
+<pre class="code javascript"><code>var style = document.styleSheets[1].cssRules[1].style;
+console.log(style.cssText); // "padding-top: 50px; padding-right: 50px; padding-bottom: 50px; padding-left: 50px; letter-spacing: -6px;"
+console.log(style.getPropertyValue('padding')); // "50px"
+console.log(style.paddinTop); // "50px"
+style.setProperty('margin-top', '50px');
+console.log('text-shadow' in style); // true
+</code></pre>
+			</section>
+			
+			<section class="step slide section2" data-x="2000" data-y="-2000">
+				<h2>CSSStyleDeclaration</h2>
+				<p>Usually, we use <strong>elem.style</strong> property of elem to get the its own style which is a <strong>CSSStyleDeclaration</strong> object. All style changed will update the style attribute in DOM.</p>
+<pre class="code javascript"><code>var cover = document.getElementById('cover');
+console.log(Object.prototype.toString.call(cover.style)); // "[Object CSSStyleDeclaration]"
+cover.style.marginTop = '50px';
+console.log(cover.style.paddingTop); // "" ?
+</code></pre>
+			</section>
+			
+			<section class="step slide section3" data-x="-1000" data-y="-1000">
+				<h2>CSSStyleDeclaration</h2>
+				<p>we can use <strong>window.getComputedStyle</strong> to get the <strong>used values</strong> of CSS. And the returned object is also a type of <strong>CSSStyleDeclaration</strong>. <a href="https://developer.mozilla.org/en/DOM/window.getComputedStyle"><strong>
+				More in MDN</strong></a>.</p>
+<pre class="code javascript"><code>var cover = document.getElementById('cover');
+var style = window.getComputedStyle(cover);
+console.log('padding top : ' + style.paddingTop); // "50px"
+console.log('font size : ' + style.fontSize); // "24px"
+console.log('text shadow : ' + style.textShadow); // "none"
+</code></pre>
+				<p>All properties returned is <strong>READ-ONLY</strong></p>
+<pre class="code javascript"><code>style.padding = "60px"; // Error !!
+</code></pre>
+			</section>
+		
+			<section class="step slide section3" data-x="0" data-y="-1000">
+				<h2>Dynamicly create DOM element</h2>
+<pre class="code javascript"><code>// create element
+var overlay = document.createElement('div');
+// give styles
+overlay.style.border = '1px solid #000';
+overlay.style.position = 'absolute';
+overlay.style.left = '100px';
+overlay.style.top = '100px';
+overlay.style.background = '#fff';
+overlay.style.webkitBoxShadow = '2px 2px 4px #ccc';
+// append to body
+document.body.appendChild(overlay);
+</code></pre>
+			</section>
+			
+			<section class="step slide section3" data-x="1000" data-y="-1000">
+				<h2>Style View</h2>
+				<div id="cssDiv" style="padding:10px;border:2px solid grey">DEMO DIV</div>
+				<p>ComputedStyle start with "b" : </p>
+				<div id="output"></div>
+				<script type="text/javascript">
+					var cssDiv = document.getElementById('cssDiv');
+					var output = document.getElementById('output');
+					var style = window.getComputedStyle(cssDiv);
+					for(var property in style){
+						if(property.indexOf('b') == 0 && style[property] !== ''){
+							var line = document.createElement('div');
+							line.innerHTML = '<span>' + property + '</span> : ' + style[property];
+							output.appendChild(line);
+						}
+					}
+				</script>
+			</section>
+
+			<section class="slide step" data-x="2000" data-y="-1000">
+				<h2>Style View</h2>
+<pre class="code javascript"><code>var cssDiv = document.getElementById('cssDiv');
+var output = document.getElementById('output');
+var style = window.getComputedStyle(cssDiv);
+for(var property in style){
+	if(property.indexOf('b') === 0 && style[property] !== ''){
+		var line = document.createElement('div');
+		line.innerHTML = '&lt;span&gt;' + property + '&lt;/span&gt; : ' + style[property];
+		output.appendChild(line);
+	}
+}
+</code></pre>
+			</section>
+
+			<section class="step" data-x="0" data-y="0">
+				<strong id="end">END</strong>
+			</section>
+
+			<div id="overview" class="step" data-x="0" data-y="-1500" data-scale="6"></div>
+		</article>
+		<script src="impress.js"></script>
+		<script>impress();</script>
+	</body>
+</html>
